@@ -93,7 +93,7 @@ function ShortenLink() {
         />
         <h1>Shorten your link</h1>
         <div className='form-work'>
-        <h3>Short domain:</h3>
+        <h3>Enter a Link:</h3>
         <input placeholder='Example.com' onChange={(e) => setInput(e.target.value)} value={input}/>
         <button onClick={handleClick}><i className="fa fa-arrow-right"></i></button>
         </div>
