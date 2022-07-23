@@ -7,22 +7,47 @@ function ShortenLink() {
     const [shortenLink, setShortenLink] = useState('')
     const [loading, setLoading] = useState(false)
     const [err, setErr] = useState(false)
-    const [black,setBlack] = useState('')
-
-    const handleChange = (e) => {
-        setInput(e.target.value)
-    }
-
+    const [shrtco,setShrtco] = useState(false)
+    const [qr,setQr] = useState(false)
+    const [shiny,setShiny] = useState(false)
     const handleClick = () => {
-        setLink(input)
-        console.log(input)
+        setLink(input)   
     }
-
-    const fetchData = async () => {
+    const handleShrtco =()=>
+    {
+        setShrtco(true)
+        setQr(false)
+        setShiny(false)
+    }
+    const handleQr =()=>
+    {
+        setShrtco(false)
+        setQr(true)
+        setShiny(false)
+    }
+    const handleShiny =()=>
+    {
+        setShrtco(false)
+        setQr(false)
+        setShiny(true)
+    }
+    const getData = async () => {
         try {
             setLoading(true)
             const res = await axios(`https://api.shrtco.de/v2/shorten?url=${link}`)
-            setShortenLink(res.data.result.full_short_link)
+            if (shrtco==true)
+                {
+                    setShortenLink(res.data.result.short_link)
+                }
+            else if (qr==true )
+                {
+                    setShortenLink(res.data.result.short_link2)
+                }
+            else if (shiny==true )
+                {
+                    setShortenLink(res.data.result.short_link3)
+                }
+            
         } catch(err) {
             setErr(err)
         } finally {
@@ -31,7 +56,7 @@ function ShortenLink() {
     }
 
     useEffect(() => {
-        if (link.length) {fetchData()}
+        if (link.length) {getData()}
     }, [link])
 
     if(loading) {
@@ -42,7 +67,7 @@ function ShortenLink() {
 
     if(err) {
         return (
-            <div>Something went wrong :(</div>
+            <div>Error</div>
         )
     }
 
@@ -55,16 +80,16 @@ function ShortenLink() {
         <h1>Shorten your link</h1>
         <div className='form-work'>
         <h3>Short domain:</h3>
-        <input placeholder='Example.com' onChange={(e) => handleChange(e)} value={input}/>
+        <input placeholder='Example.com' onChange={(e) => setInput(e.target.value)} value={input}/>
         <button onClick={handleClick}><i className="fa fa-arrow-right"></i></button>
         </div>
         <div className='group-bnt'>
             <h3>Short domain:</h3>
-            <button className={black} onClick={()=>setBlack('black')}>shrtco.de</button>
-            <button className={black} onClick={()=>setBlack('black')}>9qr.de</button>
-            <button className={black} onClick={()=>setBlack('black')}>shiny.link</button>
+            <button className={shrtco} onClick={handleShrtco}>shrtco.de</button>
+            <button className={qr} onClick={handleQr}>9qr.de</button>
+            <button className={shiny} onClick={handleShiny}>shiny.link</button>
         </div>
-        
+        <h3>Link </h3>
         {shortenLink}
     </div>
   )
