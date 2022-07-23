@@ -10,27 +10,41 @@ function ShortenLink() {
     const [shrtco,setShrtco] = useState(false)
     const [qr,setQr] = useState(false)
     const [shiny,setShiny] = useState(false)
+    const [shrtcoBG,setShrtcoBG] = useState('')
+    const [qrBG,setQrBG] = useState('')
+    const [shinyBG,setShinyBG] = useState('')
     const handleClick = () => {
         setLink(input)   
     }
     const handleShrtco =()=>
     {
+        
         setShrtco(true)
         setQr(false)
         setShiny(false)
+        setShrtcoBG('black')
+        setQrBG('')
+        setShinyBG('')
     }
     const handleQr =()=>
     {
         setShrtco(false)
         setQr(true)
         setShiny(false)
+        setShrtcoBG('')
+        setQrBG('black')
+        setShinyBG('')
     }
     const handleShiny =()=>
     {
         setShrtco(false)
         setQr(false)
         setShiny(true)
+        setShrtcoBG('')
+        setQrBG('')
+        setShinyBG('black')
     }
+    console.log(shrtco,qr,shiny)
     const getData = async () => {
         try {
             setLoading(true)
@@ -85,9 +99,9 @@ function ShortenLink() {
         </div>
         <div className='group-bnt'>
             <h3>Short domain:</h3>
-            <button className={shrtco} onClick={handleShrtco}>shrtco.de</button>
-            <button className={qr} onClick={handleQr}>9qr.de</button>
-            <button className={shiny} onClick={handleShiny}>shiny.link</button>
+            <button className={shrtcoBG} onClick={handleShrtco}>shrtco.de</button>
+            <button className={qrBG} onClick={handleQr}>9qr.de</button>
+            <button className={shinyBG} onClick={handleShiny}>shiny.link</button>
         </div>
         <h3>Link </h3>
         {shortenLink}
